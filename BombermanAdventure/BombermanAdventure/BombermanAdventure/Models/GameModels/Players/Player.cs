@@ -42,7 +42,7 @@ namespace BombermanAdventure.Models.GameModels.Players
             base.modelName = "Models/Player";
             base.modelScale = 0.1f;
             
-            modelPosition = new Vector3(100, 0, 0);
+            modelPosition = new Vector3(0, 0, 0);
             modelRotation = new Vector3();
 
             life = 100;

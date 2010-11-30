@@ -10,14 +10,14 @@ using Microsoft.Xna.Framework;
 
 namespace BombermanAdventure.Generators
 {
-    static class LevelGenerator
+    class LevelGenerator
     {
-        static ModelList models = ModelList.GetInstance();
-        public static ModelList GenerateLevel(Game game) 
+        ModelList models = ModelList.GetInstance();
+        public ModelList GenerateLevel(Game game) 
         {
             //List<AbstractGameModel> models = new List<AbstractGameModel>();
 
-            models.Add(new Ground(game));
+            models.Add(new Ground(game, 8, 8));
             //models.Add(new BrickWall(game, new Vector3(0, 0, 0)));
             //models.Add(new BrickWall(game, new Vector3(20, 0, 0)));
             //models.Add(new BrickWall(game, new Vector3(40, 0, 0)));
@@ -39,7 +39,7 @@ namespace BombermanAdventure.Generators
             models.Add(new BrickWall(game, new Vector3(40, 0, 0)));
             models.Add(new BrickWall(game, new Vector3(20, 0, 0)));
             models.Add(new BrickWall(game, new Vector3(0, 0, 0)));
-
+            //models.Add(new Ground(game, 5, 3));
 
             models.Player = new Player(game);
 

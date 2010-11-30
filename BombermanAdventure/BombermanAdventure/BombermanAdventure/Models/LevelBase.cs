@@ -32,7 +32,7 @@ namespace BombermanAdventure.Models
 
         public void Initialize(Game game)
         {
-            models = LevelGenerator.GenerateLevel(game);
+            models = (new LevelGenerator()).GenerateLevel(game);
 
             models.Hud = new HUD(game);
             //player = new Player(game);

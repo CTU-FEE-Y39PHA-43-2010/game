@@ -11,7 +11,7 @@ namespace BombermanAdventure.Models.GameModels
 {
     abstract class AbstractGameModel : DrawableGameComponent
     {
-        Model model;
+        protected Model model;
         protected ModelList models;
 
         protected float modelScale;
