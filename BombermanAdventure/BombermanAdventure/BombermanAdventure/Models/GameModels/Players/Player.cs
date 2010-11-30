@@ -8,7 +8,7 @@ using BombermanAdventure.Models.GameModels.Bombs;
 
 namespace BombermanAdventure.Models.GameModels.Players
 {
-    class Player : AbstractGameModel
+    class Player : AbstractPlayer
     {
         enum Bombs { COMMON, WATER, MUD, ELECTRIC }
 
@@ -16,23 +16,7 @@ namespace BombermanAdventure.Models.GameModels.Players
         KeyboardState oldState;
         Game game;
 
-        int possibleBombsCount;
-        int bombsCount;
-        int bombRange;
-        int life;
-
-        public int Life 
-        {
-            get { return life; }
-        }
-
-        public int BombRange 
-        {
-            get { return bombRange; }
-        }
-
-
-        public Player(Game game) : base(game) 
+        public Player(Game game, int x, int y) : base(game, x, y) 
         {
             this.game = game;
         }
@@ -42,7 +26,6 @@ namespace BombermanAdventure.Models.GameModels.Players
             base.modelName = "Models/Player";
             base.modelScale = 0.1f;
             
-            modelPosition = new Vector3(0, 0, 0);
             modelRotation = new Vector3();
 
             life = 100;
@@ -137,16 +120,16 @@ namespace BombermanAdventure.Models.GameModels.Players
                 switch (selectedBombType) 
                 {
                     case Bombs.COMMON:
-                        base.models.Add(new CommonBomb(game, modelPosition, this, gameTime));
+                        base.models.AddBomb(new CommonBomb(game, modelPosition, this, gameTime));
                         break;
                     case Bombs.WATER:
-                        base.models.Add(new WaterBomb(game, modelPosition, this, gameTime));
+                        base.models.AddBomb(new WaterBomb(game, modelPosition, this, gameTime));
                         break;
                     case Bombs.ELECTRIC:
-                        base.models.Add(new ElectricBomb(game, modelPosition, this, gameTime));
+                        base.models.AddBomb(new ElectricBomb(game, modelPosition, this, gameTime));
                         break;
                     case Bombs.MUD:
-                        base.models.Add(new MudBomb(game, modelPosition, this, gameTime));
+                        base.models.AddBomb(new MudBomb(game, modelPosition, this, gameTime));
                         break;
                 }
                 bombsCount++;

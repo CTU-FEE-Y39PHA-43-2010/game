@@ -15,33 +15,21 @@ namespace BombermanAdventure.Generators
         ModelList models = ModelList.GetInstance();
         public ModelList GenerateLevel(Game game) 
         {
-            //List<AbstractGameModel> models = new List<AbstractGameModel>();
-
-            models.Add(new Ground(game, 8, 8));
-            //models.Add(new BrickWall(game, new Vector3(0, 0, 0)));
-            //models.Add(new BrickWall(game, new Vector3(20, 0, 0)));
-            //models.Add(new BrickWall(game, new Vector3(40, 0, 0)));
-            //models.Add(new BrickWall(game, new Vector3(60, 0, 0)));
-            //models.Add(new BrickWall(game, new Vector3(80, 0, 0)));
-            //models.Add(new BrickWall(game, new Vector3(100, 0, 0)));
-            //models.Add(new BrickWall(game, new Vector3(120, 0, 0)));
-            //models.Add(new BrickWall(game, new Vector3(140, 0, 0)));
-            //models.Add(new BrickWall(game, new Vector3(160, 0, 0)));
+            models.Labyrinth = new Labyrinth(game, 8, 8);
             
-            models.Add(new BrickWall(game, new Vector3(200, 0, 0)));
-            models.Add(new BrickWall(game, new Vector3(180, 0, 0)));
-            models.Add(new BrickWall(game, new Vector3(160, 0, 0)));
-            models.Add(new BrickWall(game, new Vector3(140, 0, 0)));
-            models.Add(new BrickWall(game, new Vector3(120, 0, 0)));
-            models.Add(new BrickWall(game, new Vector3(100, 0, 0)));
-            models.Add(new BrickWall(game, new Vector3(80, 0, 0)));
-            models.Add(new BrickWall(game, new Vector3(60, 0, 0)));
-            models.Add(new BrickWall(game, new Vector3(40, 0, 0)));
-            models.Add(new BrickWall(game, new Vector3(20, 0, 0)));
-            models.Add(new BrickWall(game, new Vector3(0, 0, 0)));
-            //models.Add(new Ground(game, 5, 3));
+            models.Add(new BrickWall(game, 0, 0));
+            models.Add(new BrickWall(game, 1, 2));
+            models.Add(new BrickWall(game, 2, 5));
+            models.Add(new BrickWall(game, 3, 8));
+            models.Add(new BrickWall(game, 4, 0));
+            models.Add(new BrickWall(game, -5, -2));
+            models.Add(new BrickWall(game, 2, 7));
+            models.Add(new BrickWall(game, 2, 6));
+            models.Add(new BrickWall(game, 8, 0));
+            models.Add(new BrickWall(game, -7, 4));
+            models.Add(new BrickWall(game, 3, -4));
 
-            models.Player = new Player(game);
+            models.Player = new Player(game, 8, 8);
 
             return models;
         }

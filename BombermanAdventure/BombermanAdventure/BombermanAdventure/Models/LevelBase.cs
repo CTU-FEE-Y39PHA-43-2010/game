@@ -35,6 +35,7 @@ namespace BombermanAdventure.Models
             models = (new LevelGenerator()).GenerateLevel(game);
 
             models.Hud = new HUD(game);
+            //game.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
             //player = new Player(game);
             base.Initialize();
             //GraphicsDevice.BlendState.AlphaBlendFunction = BlendFunction.Add;
@@ -44,30 +45,27 @@ namespace BombermanAdventure.Models
 
         public override void Update(GameTime gameTime)
         {
-            models = ModelList.GetInstance();
-            List<AbstractGameModel> modelsList = new List<AbstractGameModel>();
-            foreach (AbstractGameModel model in models.Models)
-            {
-                modelsList.Add(model);
-            }
-
-            foreach (AbstractGameModel model in modelsList) 
-            {
-                model.Update(gameTime);
-            }
-            models.Player.Update(gameTime);
-            models.Hud.Update(gameTime);
+            models.Update(gameTime);
 
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            foreach (AbstractGameModel model in models.Models) 
+            GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
+            //GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+
+            models.DrawLabyrinth(gameTime);
+            models.DrawBombs(gameTime);
+
+            foreach (AbstractGameModel model in models.Models)
             {
                 model.Draw(gameTime);
             }
             models.Player.Draw(gameTime);
+
+            GraphicsDevice.DepthStencilState = DepthStencilState.None;
             models.Hud.Draw(gameTime);
         }
 

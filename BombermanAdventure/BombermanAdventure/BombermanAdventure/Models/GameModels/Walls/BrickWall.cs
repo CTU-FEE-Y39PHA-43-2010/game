@@ -6,12 +6,9 @@ using Microsoft.Xna.Framework;
 
 namespace BombermanAdventure.Models.GameModels.Walls
 {
-    class BrickWall : AbstractGameModel
+    class BrickWall : AbstractWall
     {
-        public BrickWall(Game game, Vector3 modelPosition) : base(game) 
-        {
-            base.modelPosition = modelPosition;
-        }
+        public BrickWall(Game game, int x, int y) : base(game, x, y) { }
 
         public override void Initialize()
         {

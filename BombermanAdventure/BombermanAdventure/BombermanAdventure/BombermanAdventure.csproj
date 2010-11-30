@@ -123,8 +123,10 @@
     <Compile Include="Models\GameModels\Bombs\ElectricBomb.cs" />
     <Compile Include="Models\GameModels\Bombs\MudBomb.cs" />
     <Compile Include="Models\GameModels\Bombs\WaterBomb.cs" />
-    <Compile Include="Models\GameModels\Ground.cs" />
+    <Compile Include="Models\GameModels\Labyrinth.cs" />
+    <Compile Include="Models\GameModels\Players\AbstractPlayer.cs" />
     <Compile Include="Models\GameModels\Players\Player.cs" />
+    <Compile Include="Models\GameModels\Walls\AbstractWall.cs" />
     <Compile Include="Models\GameModels\Walls\BrickWall.cs" />
     <Compile Include="Models\HUD.cs" />
     <Compile Include="Models\LevelBase.cs" />
