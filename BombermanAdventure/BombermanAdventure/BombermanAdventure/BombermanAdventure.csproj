@@ -123,7 +123,9 @@
     <Compile Include="Models\GameModels\Bombs\ElectricBomb.cs" />
     <Compile Include="Models\GameModels\Bombs\MudBomb.cs" />
     <Compile Include="Models\GameModels\Bombs\WaterBomb.cs" />
-    <Compile Include="Models\GameModels\Labyrinth.cs" />
+    <Compile Include="Models\GameModels\Labyrinths\Labyrinth.cs" />
+    <Compile Include="Models\GameModels\Labyrinths\LabyrinthBlock.cs" />
+    <Compile Include="Models\GameModels\Labyrinths\LabyrinthFloorUnit.cs" />
     <Compile Include="Models\GameModels\Players\AbstractPlayer.cs" />
     <Compile Include="Models\GameModels\Players\Player.cs" />
     <Compile Include="Models\GameModels\Walls\AbstractWall.cs" />

@@ -4,11 +4,13 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using BombermanAdventure.Cameras;
 using BombermanAdventure.Models.GameModels;
 using BombermanAdventure.Models.GameModels.Bombs;
 using BombermanAdventure.Models.GameModels.Walls;
 using BombermanAdventure.Models.GameModels.Players;
+using BombermanAdventure.Models.GameModels.Labyrinths;
 using BombermanAdventure.Events;
 using BombermanAdventure.Events.Bombs;
 
@@ -158,6 +160,22 @@ namespace BombermanAdventure.Models
            
         }
 
+        void CheckForCollisions()
+        {
+            foreach (LabyrinthBlock block in labyrinth.Blocks)
+            {
+                if (player.BoundingBox.Intersects(block.BoundingBox))
+                {
+                    block.ChangeColor(new Vector3(1f, 0f, 0f));
+                    return;
+                }
+                /*else
+                {
+                    block.ChangeColor(new Vector3(0f, 0f, 0f));
+                }*/
+            }
+        }
+
         public void Update(GameTime gameTime) 
         {
             List<AbstractGameModel> modelsList = new List<AbstractGameModel>();
@@ -185,6 +203,7 @@ namespace BombermanAdventure.Models
             labyrinth.Update(gameTime);
             player.Update(gameTime);
             hud.Update(gameTime);
+            CheckForCollisions();
         }
 
         public void DrawModels(GameTime gameTime) 

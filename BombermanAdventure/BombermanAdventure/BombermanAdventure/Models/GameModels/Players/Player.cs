@@ -16,6 +16,8 @@ namespace BombermanAdventure.Models.GameModels.Players
         KeyboardState oldState;
         Game game;
 
+        Vector3 min, max;
+
         public Player(Game game, int x, int y) : base(game, x, y) 
         {
             this.game = game;
@@ -34,12 +36,30 @@ namespace BombermanAdventure.Models.GameModels.Players
             possibleBombsCount = 3;
             bombsCount = 0;
             bombRange = 3;
-            
+
+            min = new Vector3();
+            max = new Vector3();
+            boundingBox = new BoundingBox();
+            UpdateBoundingBox();
+
             base.Initialize();
+        }
+
+        void UpdateBoundingBox() 
+        {
+            min.X = modelPosition.X - 9.9f;
+            min.Y = modelPosition.Y - 9.9f;
+            min.Z = modelPosition.Z - 9.9f;
+            max.X = modelPosition.X + 9.9f;
+            max.Y = modelPosition.Y + 9.9f;
+            max.Z = modelPosition.Z + 9.9f;
+            boundingBox.Min = min;
+            boundingBox.Max = max;
         }
 
         public override void Update(GameTime gameTime)
         {
+            UpdateBoundingBox();
             KeyBoardHandler(gameTime);
             base.Update(gameTime);
         }

@@ -6,6 +6,7 @@ using BombermanAdventure.Models;
 using BombermanAdventure.Models.GameModels;
 using BombermanAdventure.Models.GameModels.Walls;
 using BombermanAdventure.Models.GameModels.Players;
+using BombermanAdventure.Models.GameModels.Labyrinths;
 using Microsoft.Xna.Framework;
 
 namespace BombermanAdventure.Generators

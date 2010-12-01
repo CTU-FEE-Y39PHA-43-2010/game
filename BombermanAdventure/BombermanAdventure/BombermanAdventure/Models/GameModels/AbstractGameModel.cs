@@ -11,24 +11,65 @@ namespace BombermanAdventure.Models.GameModels
 {
     abstract class AbstractGameModel : DrawableGameComponent
     {
+        /// <summary>
+        /// 3D model
+        /// </summary>
         protected Model model;
+        public Model Model 
+        {
+            get { return model; }
+        }
+
+        /// <summary>
+        /// instance modellistu
+        /// </summary>
         protected ModelList models;
 
+        /// <summary>
+        /// meritko modelu
+        /// </summary>
         protected float modelScale;
-        protected String modelName;
-        protected Vector3 modelPosition;
-        protected Vector3 modelRotation;
 
-        Vector3 ModelPosition 
+        /// <summary>
+        /// nazev modelu
+        /// </summary>
+        protected String modelName;
+
+        /// <summary>
+        /// pozice modelu
+        /// </summary>
+        protected Vector3 modelPosition;
+        public Vector3 ModelPosition
         {
             get { return modelPosition; }
         }
 
+        /// <summary>
+        /// rotace modelu
+        /// </summary>
+        protected Vector3 modelRotation;
+
+        /// <summary>
+        /// boundingBox objektu
+        /// </summary>
+        protected BoundingBox boundingBox;
+        public BoundingBox BoundingBox
+        {
+            get { return boundingBox; }
+        }
+
+        /// <summary>
+        /// konstruktor
+        /// </summary>
+        /// <param name="game">instance hry</param>
         public AbstractGameModel(Game game) : base(game) 
         {
             Initialize();
         }
 
+        /// <summary>
+        /// inicializacni metoda
+        /// </summary>
         public override void Initialize() 
         {
             models = ModelList.GetInstance();
@@ -36,12 +77,19 @@ namespace BombermanAdventure.Models.GameModels
             base.Initialize();
         }
 
+        /// <summary>
+        /// nahrani obsahu
+        /// </summary>
         protected override void LoadContent()
         {
             model = Game.Content.Load<Model>(modelName);
             base.LoadContent();
         }
 
+        /// <summary>
+        /// metoda pro vykresleni objektu
+        /// </summary>
+        /// <param name="gameTime">herni cas</param>
         public override void Draw(GameTime gameTime)
         {
             Matrix world;
@@ -64,6 +112,10 @@ namespace BombermanAdventure.Models.GameModels
             }
         }
 
+        /// <summary>
+        /// metoda pro provedeni reakce na udalost
+        /// </summary>
+        /// <param name="ieEvent">udalost</param>
         public abstract void OnEvent(CommonEvent ieEvent);
     }
 }
