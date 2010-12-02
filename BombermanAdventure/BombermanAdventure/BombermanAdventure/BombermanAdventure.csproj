@@ -113,6 +113,7 @@
     <Compile Include="Events\Bombs\MudBombExplosionEvent.cs" />
     <Compile Include="Events\Bombs\WaterBombExplosionEvent.cs" />
     <Compile Include="Events\Bombs\CommonBombExplosionEvent.cs" />
+    <Compile Include="Events\Collisions\CollisionEvent.cs" />
     <Compile Include="Events\CommonEvent.cs" />
     <Compile Include="Events\IDestructible.cs" />
     <Compile Include="GameClass.cs" />

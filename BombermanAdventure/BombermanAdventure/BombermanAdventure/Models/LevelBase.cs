@@ -21,9 +21,6 @@ namespace BombermanAdventure.Models
     class LevelBase : DrawableGameComponent
     {
         ModelList models;
-        //List<AbstractGameModel> models;
-        //TODO: predelat na tridu player
-        //Player player;
 
         public LevelBase(Game game) : base(game) 
         {
@@ -33,14 +30,8 @@ namespace BombermanAdventure.Models
         public void Initialize(Game game)
         {
             models = (new LevelGenerator()).GenerateLevel(game);
-
             models.Hud = new HUD(game);
-            //game.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
-            //player = new Player(game);
             base.Initialize();
-            //GraphicsDevice.BlendState.AlphaBlendFunction = BlendFunction.Add;
-            //BlendState.AlphaBlend.AlphaBlendFunction = BlendFunction.Add;
-            //GraphicsDevice.RasterizerState.CullMode = CullMode.CullClockwiseFace;
         }
 
         public override void Update(GameTime gameTime)
@@ -57,12 +48,8 @@ namespace BombermanAdventure.Models
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             models.DrawLabyrinth(gameTime);
+            models.DrawWalls(gameTime);
             models.DrawBombs(gameTime);
-
-            foreach (AbstractGameModel model in models.Models)
-            {
-                model.Draw(gameTime);
-            }
             models.Player.Draw(gameTime);
 
             GraphicsDevice.DepthStencilState = DepthStencilState.None;

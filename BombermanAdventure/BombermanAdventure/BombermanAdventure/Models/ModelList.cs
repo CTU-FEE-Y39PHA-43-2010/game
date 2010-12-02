@@ -13,6 +13,7 @@ using BombermanAdventure.Models.GameModels.Players;
 using BombermanAdventure.Models.GameModels.Labyrinths;
 using BombermanAdventure.Events;
 using BombermanAdventure.Events.Bombs;
+using BombermanAdventure.Events.Collisions;
 
 namespace BombermanAdventure.Models
 {
@@ -105,6 +106,9 @@ namespace BombermanAdventure.Models
             get { return bombs; }
         }
 
+        /// <summary>
+        /// modely zdi
+        /// </summary>
         List<AbstractWall> walls;
         public List<AbstractWall> Walls 
         {
@@ -130,7 +134,7 @@ namespace BombermanAdventure.Models
         {
             models.Add(imModel);
         }
-
+        
         public void AddBomb(AbstractBomb bomb)
         {
             bombs.Add(bomb);
@@ -160,19 +164,35 @@ namespace BombermanAdventure.Models
            
         }
 
-        void CheckForCollisions()
+        /// <summary>
+        /// metoda pro kontrolovani kolizi lidsho hrace
+        /// </summary>
+        void CheckForHumanPlayerCollisions()
         {
             foreach (LabyrinthBlock block in labyrinth.Blocks)
             {
                 if (player.BoundingBox.Intersects(block.BoundingBox))
                 {
                     block.ChangeColor(new Vector3(1f, 0f, 0f));
+                    player.OnEvent(new CollisionEvent(player, block));
                     return;
                 }
-                /*else
+            }
+            foreach (AbstractWall wall in walls) 
+            {
+                if (player.BoundingBox.Intersects(wall.BoundingBox)) 
                 {
-                    block.ChangeColor(new Vector3(0f, 0f, 0f));
-                }*/
+                    player.OnEvent(new CollisionEvent(player, wall));
+                    return;
+                }
+            }
+            foreach (AbstractBomb bomb in bombs) 
+            {
+                if (player.BoundingBox.Intersects(bomb.BoundingBox)) 
+                {
+                    player.OnEvent(new CollisionEvent(player, bomb));
+                    return;
+                }
             }
         }
 
@@ -203,7 +223,7 @@ namespace BombermanAdventure.Models
             labyrinth.Update(gameTime);
             player.Update(gameTime);
             hud.Update(gameTime);
-            CheckForCollisions();
+            CheckForHumanPlayerCollisions();
         }
 
         public void DrawModels(GameTime gameTime) 
