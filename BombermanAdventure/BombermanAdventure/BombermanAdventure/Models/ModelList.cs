@@ -57,15 +57,6 @@ namespace BombermanAdventure.Models
         }
 
         /// <summary>
-        /// modely k vykresleni
-        /// </summary>
-        List<AbstractGameModel> models;
-        public List<AbstractGameModel> Models 
-        {
-            get { return models; }
-        }
-
-        /// <summary>
         /// Head-Up Display
         /// </summary>
         HUD hud;
@@ -118,7 +109,6 @@ namespace BombermanAdventure.Models
 
         private ModelList() 
         {
-            models = new List<AbstractGameModel>();
             bombs = new List<AbstractBomb>();
             walls = new List<AbstractWall>();
         }
@@ -128,11 +118,6 @@ namespace BombermanAdventure.Models
             if (instance == null)
                 instance = new ModelList();
             return instance;
-        }
-
-        public void Add(AbstractGameModel imModel) 
-        {
-            models.Add(imModel);
         }
         
         public void AddBomb(AbstractBomb bomb)
@@ -155,17 +140,13 @@ namespace BombermanAdventure.Models
             }
             else
             {
-                foreach (AbstractGameModel lmModel in models)
-                {
-                    lmModel.OnEvent(ieEvent);
-                }
                 player.OnEvent(ieEvent);
             }
            
         }
 
         /// <summary>
-        /// metoda pro kontrolovani kolizi lidsho hrace
+        /// metoda pro kontrolovani kolizi lidskeho hrace
         /// </summary>
         void CheckForHumanPlayerCollisions()
         {
@@ -199,11 +180,6 @@ namespace BombermanAdventure.Models
         public void Update(GameTime gameTime) 
         {
             List<AbstractGameModel> modelsList = new List<AbstractGameModel>();
-            foreach (AbstractGameModel model in models)
-            {
-                modelsList.Add(model);
-            }
-
             foreach (AbstractBomb bomb in bombs)
             {
                 modelsList.Add(bomb);

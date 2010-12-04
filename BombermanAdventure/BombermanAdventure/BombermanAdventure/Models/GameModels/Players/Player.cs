@@ -31,6 +31,7 @@ namespace BombermanAdventure.Models.GameModels.Players
             modelRotation = new Vector3();
 
             life = 100;
+            speed = 1f;
 
             selectedBombType = Bombs.COMMON;
             possibleBombsCount = 3;
@@ -59,8 +60,8 @@ namespace BombermanAdventure.Models.GameModels.Players
 
         public override void Update(GameTime gameTime)
         {
-            UpdateBoundingBox();
             KeyBoardHandler(gameTime);
+            UpdateBoundingBox();
             base.Update(gameTime);
         }
 
@@ -80,22 +81,9 @@ namespace BombermanAdventure.Models.GameModels.Players
 
         private void KeyBoardHandler(GameTime gameTime)
         {
-            switch(Cameras.Camera.position) 
-            {
-                case Cameras.Camera.Position.FRONT:
-                    this.Front();
-                    break;
-                case Cameras.Camera.Position.LEFT:
-                    this.Left();
-                    break;
-                case Cameras.Camera.Position.BACK:
-                    this.Back();
-                    break;
-                case Cameras.Camera.Position.RIGHT:
-                    this.Right();
-                    break;
-            }
             KeyboardState ks = Keyboard.GetState();
+
+            Walking(ks);
 
             if (ks.IsKeyDown(Keys.Space))
             {
@@ -133,7 +121,7 @@ namespace BombermanAdventure.Models.GameModels.Players
             }
         }
 
-        private void PutBomb(GameTime gameTime) 
+        public override void PutBomb(GameTime gameTime) 
         {
             if (bombsCount < possibleBombsCount) 
             {
@@ -156,107 +144,112 @@ namespace BombermanAdventure.Models.GameModels.Players
             }
         }
 
-        #region Ovladani Chuze
-        private void Front() 
+        public override void Fire()
         {
-            KeyboardState ks = Keyboard.GetState();
+            throw new NotImplementedException();
+        }
 
+#region Ovladani Chuze
+
+        public override void GoUp()
+        {
+            switch (models.Camera.position)
+            {
+                case Cameras.Camera.Position.FRONT:
+                    modelPosition.X -= speed;
+                    break;
+                case Cameras.Camera.Position.LEFT:
+                    modelPosition.Z += speed;
+                    break;
+                case Cameras.Camera.Position.BACK:
+                    modelPosition.X += speed;
+                    break;
+                case Cameras.Camera.Position.RIGHT:
+                    modelPosition.Z -= speed;
+                    break;
+            }
+        }
+
+        public override void GoDown()
+        {
+            switch (models.Camera.position)
+            {
+                case Cameras.Camera.Position.FRONT:
+                    modelPosition.X += speed;
+                    break;
+                case Cameras.Camera.Position.LEFT:
+                    modelPosition.Z -= speed;
+                    break;
+                case Cameras.Camera.Position.BACK:
+                    modelPosition.X -= speed;
+                    break;
+                case Cameras.Camera.Position.RIGHT:
+                    modelPosition.Z += speed;
+                    break;
+            }
+        }
+
+        public override void GoLeft()
+        {
+            switch (models.Camera.position)
+            {
+                case Cameras.Camera.Position.FRONT:
+                    modelPosition.Z += speed;
+                    break;
+                case Cameras.Camera.Position.LEFT:
+                    modelPosition.X += speed;
+                    break;
+                case Cameras.Camera.Position.BACK:
+                    modelPosition.Z -= speed;
+                    break;
+                case Cameras.Camera.Position.RIGHT:
+                    modelPosition.X -= speed;
+                    break;
+            }
+        }
+
+        public override void GoRight()
+        {
+            switch (models.Camera.position)
+            {
+                case Cameras.Camera.Position.FRONT:
+                    modelPosition.Z -= speed;
+                    break;
+                case Cameras.Camera.Position.LEFT:
+                    modelPosition.X -= speed;
+                    break;
+                case Cameras.Camera.Position.BACK:
+                    modelPosition.Z += speed;
+                    break;
+                case Cameras.Camera.Position.RIGHT:
+                    modelPosition.X += speed;
+                    break;
+            }
+        }
+
+        private void Walking(KeyboardState ks) 
+        {
             if (ks.IsKeyDown(Keys.Right))
             {
-                modelPosition.Z -= 2;
+                GoRight();
             }
 
             if (ks.IsKeyDown(Keys.Left))
             {
-                modelPosition.Z += 2;
+                GoLeft();
             }
 
             if (ks.IsKeyDown(Keys.Up))
             {
-                modelPosition.X -= 2;
+                GoUp();
             }
 
             if (ks.IsKeyDown(Keys.Down))
             {
-                modelPosition.X += 2;
+                GoDown();
             }
         }
-
-        private void Left() 
-        {
-            KeyboardState ks = Keyboard.GetState();
-
-            if (ks.IsKeyDown(Keys.Right))
-            {
-                modelPosition.X -= 2;
-            }
-
-            if (ks.IsKeyDown(Keys.Left))
-            {
-                modelPosition.X += 2;
-            }
-
-            if (ks.IsKeyDown(Keys.Up))
-            {
-                modelPosition.Z += 2;
-            }
-
-            if (ks.IsKeyDown(Keys.Down))
-            {
-                modelPosition.Z -= 2;
-            }
-        }
-
-        private void Back() 
-        {
-            KeyboardState ks = Keyboard.GetState();
-
-            if (ks.IsKeyDown(Keys.Right))
-            {
-                modelPosition.Z += 2;
-            }
-
-            if (ks.IsKeyDown(Keys.Left))
-            {
-                modelPosition.Z -= 2;
-            }
-
-            if (ks.IsKeyDown(Keys.Up))
-            {
-                modelPosition.X += 2;
-            }
-
-            if (ks.IsKeyDown(Keys.Down))
-            {
-                modelPosition.X -= 2;
-            }
-        }
-
-        private void Right() 
-        {
-            KeyboardState ks = Keyboard.GetState();
-
-            if (ks.IsKeyDown(Keys.Right))
-            {
-                modelPosition.X += 2;
-            }
-
-            if (ks.IsKeyDown(Keys.Left))
-            {
-                modelPosition.X -= 2;
-            }
-
-            if (ks.IsKeyDown(Keys.Up))
-            {
-                modelPosition.Z -= 2;
-            }
-
-            if (ks.IsKeyDown(Keys.Down))
-            {
-                modelPosition.Z += 2;
-            }
-        }
-#endregion
+#endregion //Ovladani Chuze
 #endregion
     }
 }

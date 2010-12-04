@@ -49,9 +49,9 @@ namespace BombermanAdventure.Cameras
         /// <summary>
         /// aktualni pozice kamery
         /// </summary>
-        static Position _position;
+        Position _position;
 
-        public static Position position 
+        public Position position 
         {
             get { return _position; }
         }
