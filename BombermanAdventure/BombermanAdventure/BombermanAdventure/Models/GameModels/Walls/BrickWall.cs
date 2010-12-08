@@ -18,7 +18,7 @@ namespace BombermanAdventure.Models.GameModels.Walls
             base.Initialize();
         }
 
-        public override void OnEvent(Events.CommonEvent ieEvent)
+        public override void OnEvent(Events.CommonEvent ieEvent, GameTime gameTime)
         {
             //throw new NotImplementedException();
         }

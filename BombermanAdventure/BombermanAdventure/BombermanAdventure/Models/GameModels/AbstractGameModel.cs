@@ -63,12 +63,15 @@ namespace BombermanAdventure.Models.GameModels
             get { return boundingSphere; }
         }
 
+        protected Game game;
+
         /// <summary>
         /// konstruktor
         /// </summary>
         /// <param name="game">instance hry</param>
         public AbstractGameModel(Game game) : base(game) 
         {
+            this.game = game;
             Initialize();
         }
 
@@ -121,6 +124,6 @@ namespace BombermanAdventure.Models.GameModels
         /// metoda pro provedeni reakce na udalost
         /// </summary>
         /// <param name="ieEvent">udalost</param>
-        public abstract void OnEvent(CommonEvent ieEvent);
+        public abstract void OnEvent(CommonEvent ieEvent, GameTime gameTime);
     }
 }

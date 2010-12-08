@@ -186,6 +186,6 @@ namespace BombermanAdventure.Models.GameModels.Labyrinths
         /// metoda pro provedeni reakce na udalost
         /// </summary>
         /// <param name="ieEvent">udalost</param>
-        public override void OnEvent(Events.CommonEvent ieEvent) { }
+        public override void OnEvent(Events.CommonEvent ieEvent, GameTime gameTime) { }
     }
 }

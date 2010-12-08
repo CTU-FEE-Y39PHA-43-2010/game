@@ -50,6 +50,7 @@ namespace BombermanAdventure.Models
             models.DrawLabyrinth(gameTime);
             models.DrawWalls(gameTime);
             models.DrawBombs(gameTime);
+            models.DrawExplosions(gameTime);
             models.Player.Draw(gameTime);
 
             GraphicsDevice.DepthStencilState = DepthStencilState.None;

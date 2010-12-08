@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using BombermanAdventure.Events;
 
 namespace BombermanAdventure.Models.GameModels.Labyrinths
 {
@@ -39,7 +40,7 @@ namespace BombermanAdventure.Models.GameModels.Labyrinths
         /// metoda pro provedeni reakce na udalost
         /// </summary>
         /// <param name="ieEvent">udalost</param>
-        public override void OnEvent(Events.CommonEvent ieEvent) { }
+        public override void OnEvent(CommonEvent ieEvent, GameTime gameTime) { }
 
         /// <summary>
         /// metoda pro vykresleni bloku

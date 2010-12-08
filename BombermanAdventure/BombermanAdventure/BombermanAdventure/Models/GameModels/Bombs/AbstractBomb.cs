@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using BombermanAdventure.Events;
 using BombermanAdventure.Events.Bombs;
 using BombermanAdventure.Models.GameModels.Players;
 
@@ -13,7 +14,7 @@ namespace BombermanAdventure.Models.GameModels.Bombs
         protected Player player;
         TimeSpan creationTime;
         bool scaleDown = true;
-        int range;
+        protected int range;
         float creationModelScale;
         float deltaModelScale;
 
@@ -42,7 +43,7 @@ namespace BombermanAdventure.Models.GameModels.Bombs
         {
             if (creationTime.Seconds + 5 < gameTime.TotalGameTime.Seconds)
             {
-                this.RegisterEvent();
+                this.RegisterEvent(gameTime);
             }
             else 
             {
@@ -66,8 +67,8 @@ namespace BombermanAdventure.Models.GameModels.Bombs
             }
         }
 
-        abstract protected void RegisterEvent();
+        abstract protected void RegisterEvent(GameTime gameTime);
 
-        abstract public override void OnEvent(Events.CommonEvent ieEvent);
+        abstract public override void OnEvent(CommonEvent ieEvent, GameTime gameTime);
     }
 }

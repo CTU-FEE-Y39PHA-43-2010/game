@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using BombermanAdventure.Models.GameModels.Players;
+using BombermanAdventure.Models.GameModels.Explosions;
 using BombermanAdventure.Events.Bombs;
 using BombermanAdventure.Events;
 
@@ -20,14 +21,16 @@ namespace BombermanAdventure.Models.GameModels.Bombs
             base.Initialize();
         }
 
-        protected override void RegisterEvent()
+        protected override void RegisterEvent(GameTime gameTime)
         {
-            base.models.RegisterEvent(new CommonBombExplosionEvent(this, player));
+            CommonExplosion ex = new CommonExplosion(game, player, modelPosition, gameTime);
+            base.models.AddExplosion(ex);
+            base.models.RegisterEvent(new CommonBombExplosionEvent(this, player), gameTime);
         }
 
-        public override void OnEvent(CommonEvent ieEvent)
-        {
-            //throw new NotImplementedException();
+        public override void OnEvent(CommonEvent ieEvent, GameTime gameTime) 
+        { 
+            RegisterEvent(gameTime);
         }
     }
 }

@@ -10,6 +10,8 @@ namespace BombermanAdventure
         /// </summary>
         static void Main(string[] args)
         {
+            Logger.init();
+            Logger.Active = true;
             using (GameClass game = new GameClass())
             {
                 game.Run();

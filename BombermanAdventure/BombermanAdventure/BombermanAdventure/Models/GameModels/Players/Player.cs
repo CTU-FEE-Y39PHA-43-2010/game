@@ -76,7 +76,7 @@ namespace BombermanAdventure.Models.GameModels.Players
 
         }
 
-        public override void OnEvent(Events.CommonEvent ieEvent)
+        public override void OnEvent(Events.CommonEvent ieEvent, GameTime gameTime)
         {
             if (ieEvent is Events.Bombs.AbstractBombExplosionEvent)
             {

@@ -6,42 +6,29 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BombermanAdventure.Events;
 
-namespace BombermanAdventure.Models.GameModels.Labyrinths
+namespace BombermanAdventure.Models.GameModels.Explosions
 {
-    class LabyrinthFloorUnit : AbstractGameModel
+    class ExplosionItem : AbstractGameModel
     {
-        /// <summary>
-        /// konstruktor
-        /// </summary>
-        /// <param name="game">instance hry</param>
-        /// <param name="position">pozice podlahy</param>
-        public LabyrinthFloorUnit(Game game, Vector3 position)
-            : base(game)
+        protected Vector3 color;
+
+        public ExplosionItem(Game game, Vector3 color, Vector3 position) : base(game) 
         {
-            base.modelPosition = position;
+            this.modelPosition = position;
+            this.color = color;
+            this.boundingBox = new BoundingBox(new Vector3(modelPosition.X - 9.9f, modelPosition.Y, modelPosition.Z - 9.9f),
+                new Vector3(modelPosition.X + 9.9f, modelPosition.Y + 20f, modelPosition.Z + 9.9f));
         }
 
-        /// <summary>
-        /// inicializacni metoda
-        /// </summary>
         public override void Initialize()
         {
-            base.modelName = "Models/GroundUnit";
+            base.modelName = "Models/IndestructibleBlock";
             base.modelScale = 1f;
             base.modelRotation = new Vector3();
-            base.Initialize();
+            models = ModelList.GetInstance();
+            LoadContent();
         }
 
-        /// <summary>
-        /// metoda pro provedeni reakce na udalost
-        /// </summary>
-        /// <param name="ieEvent">udalost</param>
-        public override void OnEvent(CommonEvent ieEvent, GameTime gameTime) { }
-
-        /// <summary>
-        /// metoda pro vykresleni podlahy
-        /// </summary>
-        /// <param name="gameTime"></param>
         public override void Draw(GameTime gameTime)
         {
             Matrix world;
@@ -51,19 +38,30 @@ namespace BombermanAdventure.Models.GameModels.Labyrinths
             world *= Matrix.CreateRotationZ(MathHelper.ToRadians(modelRotation.Z));
             world *= Matrix.CreateTranslation(modelPosition);
 
+            Matrix[] transforms = new Matrix[model.Bones.Count];
+            model.CopyAbsoluteBoneTransformsTo(transforms);
+
             foreach (ModelMesh mesh in model.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    //effect.EnableDefaultLighting();
                     effect.PreferPerPixelLighting = true;
                     effect.LightingEnabled = true;
+                    effect.Alpha = 0.8f;
                     effect.World = world;
+                    effect.DiffuseColor = color;
+                    //effect.World = world;
                     effect.View = models.Camera.viewMatrix;
                     effect.Projection = models.Camera.projectionMatrix;
                 }
                 mesh.Draw();
             }
+        }
+
+
+        public override void OnEvent(CommonEvent ieEvent, GameTime gameTime)
+        {
+            throw new NotImplementedException();
         }
     }
 }

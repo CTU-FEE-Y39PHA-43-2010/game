@@ -20,12 +20,12 @@ namespace BombermanAdventure.Models.GameModels.Bombs
             base.Initialize();
         }
 
-        protected override void RegisterEvent()
+        protected override void RegisterEvent(GameTime gameTime)
         {
-            base.models.RegisterEvent(new MudBombExplosionEvent(this, player));
+            base.models.RegisterEvent(new MudBombExplosionEvent(this, player), gameTime);
         }
 
-        public override void OnEvent(CommonEvent ieEvent)
+        public override void OnEvent(CommonEvent ieEvent, GameTime gameTime)
         {
             //throw new NotImplementedException();
         }
