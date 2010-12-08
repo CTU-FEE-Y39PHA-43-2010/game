@@ -152,16 +152,17 @@ namespace BombermanAdventure.Models
         {
             foreach (LabyrinthBlock block in labyrinth.Blocks)
             {
-                if (player.BoundingBox.Intersects(block.BoundingBox))
+                if (player.BoundingSphere.Intersects(block.BoundingBox))
                 {
-                    block.ChangeColor(new Vector3(1f, 0f, 0f));
+                    block.ChangeColor(new Vector3(0f, 1f, 0f));
                     player.OnEvent(new CollisionEvent(player, block));
                     return;
                 }
             }
+
             foreach (AbstractWall wall in walls) 
             {
-                if (player.BoundingBox.Intersects(wall.BoundingBox)) 
+                if (player.BoundingSphere.Intersects(wall.BoundingBox)) 
                 {
                     player.OnEvent(new CollisionEvent(player, wall));
                     return;
@@ -169,7 +170,7 @@ namespace BombermanAdventure.Models
             }
             foreach (AbstractBomb bomb in bombs) 
             {
-                if (player.BoundingBox.Intersects(bomb.BoundingBox)) 
+                if (player.BoundingSphere.Intersects(bomb.BoundingSphere) && bomb.isCollidable) 
                 {
                     player.OnEvent(new CollisionEvent(player, bomb));
                     return;

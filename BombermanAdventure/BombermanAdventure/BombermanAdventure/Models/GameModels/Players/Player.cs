@@ -18,16 +18,20 @@ namespace BombermanAdventure.Models.GameModels.Players
 
         Vector3 min, max;
 
-        public Player(Game game, int x, int y) : base(game, x, y) 
+        private Vector3 prevModelPosition;
+
+        public Player(Game game, int x, int y)
+            : base(game, x, y)
         {
             this.game = game;
         }
 
         public override void Initialize()
-        {   
+        {
             base.modelName = "Models/Player";
             base.modelScale = 0.1f;
-            
+
+
             modelRotation = new Vector3();
 
             life = 100;
@@ -38,15 +42,18 @@ namespace BombermanAdventure.Models.GameModels.Players
             bombsCount = 0;
             bombRange = 3;
 
+            prevModelPosition = modelPosition;
+
             min = new Vector3();
             max = new Vector3();
+            boundingSphere = new BoundingSphere();
             boundingBox = new BoundingBox();
             UpdateBoundingBox();
 
             base.Initialize();
         }
 
-        void UpdateBoundingBox() 
+        void UpdateBoundingBox()
         {
             min.X = modelPosition.X - 9.9f;
             min.Y = modelPosition.Y - 9.9f;
@@ -56,13 +63,17 @@ namespace BombermanAdventure.Models.GameModels.Players
             max.Z = modelPosition.Z + 9.9f;
             boundingBox.Min = min;
             boundingBox.Max = max;
+            boundingSphere.Center = modelPosition;
+            boundingSphere.Radius = 7.5f;
         }
 
         public override void Update(GameTime gameTime)
         {
+            prevModelPosition = modelPosition;
             KeyBoardHandler(gameTime);
             UpdateBoundingBox();
             base.Update(gameTime);
+
         }
 
         public override void OnEvent(Events.CommonEvent ieEvent)
@@ -74,6 +85,10 @@ namespace BombermanAdventure.Models.GameModels.Players
                 {
                     bombsCount--;
                 }
+            }
+            if (ieEvent is Events.Collisions.CollisionEvent)
+            {
+                modelPosition = prevModelPosition;
             }
         }
 
@@ -87,7 +102,7 @@ namespace BombermanAdventure.Models.GameModels.Players
 
             if (ks.IsKeyDown(Keys.Space))
             {
-                if (!oldState.IsKeyDown(Keys.Space)) 
+                if (!oldState.IsKeyDown(Keys.Space))
                 {
                     this.PutBomb(gameTime);
                 }
@@ -102,7 +117,7 @@ namespace BombermanAdventure.Models.GameModels.Players
             oldState = ks;
         }
 
-        private void ChageBombType(GameTime gameTime) 
+        private void ChageBombType(GameTime gameTime)
         {
             switch (selectedBombType)
             {
@@ -121,14 +136,49 @@ namespace BombermanAdventure.Models.GameModels.Players
             }
         }
 
-        public override void PutBomb(GameTime gameTime) 
+        public override void PutBomb(GameTime gameTime)
         {
-            if (bombsCount < possibleBombsCount) 
+            if (bombsCount < possibleBombsCount)
             {
-                switch (selectedBombType) 
+                switch (selectedBombType)
                 {
                     case Bombs.COMMON:
-                        base.models.AddBomb(new CommonBomb(game, modelPosition, this, gameTime));
+                        Vector3 pos = new Vector3();
+                        if ((Math.Abs(modelPosition.X % 20)) >= 10)
+                        {
+                            if (modelPosition.X % 20 < 0)
+                            {
+                                pos.X = modelPosition.X - 20 - modelPosition.X % 20;
+                            }
+                            else
+                            {
+                                pos.X = modelPosition.X + 20 - modelPosition.X % 20;
+                            }
+                            
+                        }
+                        else
+                        {
+                            pos.X = modelPosition.X - modelPosition.X % 20;
+                        }
+                        if ((Math.Abs(modelPosition.Z % 20)) >= 10)
+                        {
+                            if (modelPosition.Z % 20 < 0)
+                            {
+                                pos.Z = modelPosition.Z - 20 - modelPosition.Z % 20;
+                            }
+                            else
+                            {
+                                pos.Z = modelPosition.Z + 20 - modelPosition.Z % 20;
+                            }
+                            
+                        }
+                        else
+                        {
+                            pos.Z = modelPosition.Z - modelPosition.Z % 20;
+                        }
+                        pos.Y = modelPosition.Y; 
+                        //Vector3 pos = new Vector3(modelPosition.X - (modelPosition.X % 20), modelPosition.Y, modelPosition.Z - (modelPosition.Z % 20));
+                        base.models.AddBomb(new CommonBomb(game, pos, this, gameTime));
                         break;
                     case Bombs.WATER:
                         base.models.AddBomb(new WaterBomb(game, modelPosition, this, gameTime));
@@ -149,7 +199,7 @@ namespace BombermanAdventure.Models.GameModels.Players
             throw new NotImplementedException();
         }
 
-#region Ovladani Chuze
+        #region Ovladani Chuze
 
         public override void GoUp()
         {
@@ -227,11 +277,12 @@ namespace BombermanAdventure.Models.GameModels.Players
             }
         }
 
-        private void Walking(KeyboardState ks) 
+        private void Walking(KeyboardState ks)
         {
             if (ks.IsKeyDown(Keys.Right))
             {
                 GoRight();
+
             }
 
             if (ks.IsKeyDown(Keys.Left))
@@ -249,7 +300,7 @@ namespace BombermanAdventure.Models.GameModels.Players
                 GoDown();
             }
         }
-#endregion //Ovladani Chuze
-#endregion
+        #endregion //Ovladani Chuze
+        #endregion
     }
 }
