@@ -57,6 +57,11 @@ namespace BombermanAdventure.Models.GameModels
         {
             get { return boundingBox; }
         }
+        protected BoundingSphere boundingSphere;
+        public BoundingSphere BoundingSphere
+        {
+            get { return boundingSphere; }
+        }
 
         /// <summary>
         /// konstruktor

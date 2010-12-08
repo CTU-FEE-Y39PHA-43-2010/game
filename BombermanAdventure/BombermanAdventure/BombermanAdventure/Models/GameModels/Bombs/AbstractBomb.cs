@@ -17,12 +17,17 @@ namespace BombermanAdventure.Models.GameModels.Bombs
         float creationModelScale;
         float deltaModelScale;
 
+        public bool isCollidable;
+
         public AbstractBomb(Game game, Vector3 modelPosition, Player player, GameTime gameTime) : base(game) 
         {
             this.modelPosition = modelPosition;
             this.player = player;
             this.creationTime = gameTime.TotalGameTime;
             this.range = player.BombRange;
+            this.isCollidable = false;
+
+            boundingSphere = new BoundingSphere(modelPosition, 5.0f);
         }
 
         public override void Initialize()
@@ -53,6 +58,11 @@ namespace BombermanAdventure.Models.GameModels.Bombs
                 {
                     scaleDown = !scaleDown;
                 }
+            }
+            if (!models.Player.BoundingSphere.Intersects(this.BoundingSphere))
+            {
+                isCollidable = true;
+
             }
         }
 

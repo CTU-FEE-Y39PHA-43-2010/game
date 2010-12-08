@@ -46,7 +46,7 @@ namespace BombermanAdventure.Models
             // vykreslime texturu
             spriteBatch.Draw(texture, new Rectangle(0,0,100,100), Color.Green);
             // vzkreslime text
-            spriteBatch.DrawString(spriteFont, models.Player.Life + "%", new Vector2(20, 50), Color.White);
+            spriteBatch.DrawString(spriteFont, models.Player.Life + "%[" + models.Player.ModelPosition.X + "," + models.Player.ModelPosition.Z + "]" + "~[" + models.Player.ModelPosition.X % 20 + "," + models.Player.ModelPosition.Z % 20 + "]", new Vector2(20, 50), Color.White);
             spriteBatch.End();
         }
     }
